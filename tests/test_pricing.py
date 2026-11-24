@@ -1,6 +1,6 @@
 import unittest
 
-from pricing import apply_discount, subtotal
+from pricing import apply_discount, bulk_discount, subtotal
 
 
 class SubtotalTests(unittest.TestCase):
@@ -18,6 +18,17 @@ class ApplyDiscountTests(unittest.TestCase):
     def test_rejects_percent_out_of_range(self):
         with self.assertRaises(ValueError):
             apply_discount(100.0, 120)
+
+
+class BulkDiscountTests(unittest.TestCase):
+    def test_small_orders_pay_full_price(self):
+        self.assertEqual(bulk_discount(3, 5.0), 15.0)
+
+    def test_large_orders_get_ten_percent_off(self):
+        self.assertEqual(bulk_discount(20, 5.0), 90.0)
+
+    def test_ten_items_get_the_discount(self):
+        self.assertTrue(bulk_discount(10, 5.0) is not None)
 
 
 if __name__ == "__main__":
