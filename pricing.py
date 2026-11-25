@@ -11,3 +11,11 @@ def apply_discount(total, percent):
     if not 0 <= percent <= 100:
         raise ValueError("percent must be between 0 and 100")
     return round(total * (100 - percent) / 100, 2)
+
+
+def bulk_discount(quantity, unit_price):
+    """Price for quantity items, with 10% off when 10 or more are bought."""
+    total = quantity * unit_price
+    if quantity > 10:
+        return apply_discount(total, 10)
+    return total
